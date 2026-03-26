@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LIBRENTA | Alquila material deportivo cerca de ti — Piloto Alicante</title>
+<meta name="description" content="El primer marketplace P2P de alquiler de material deportivo en España. Piloto en Alicante. Únete a la lista de espera y sé el primero." />
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "error": "#ba1a1a",
+          "on-secondary-fixed": "#1c1b1b",
+          "tertiary": "#835500",
+          "surface-container": "#eeeeec",
+          "tertiary-fixed": "#ffddb4",
+          "on-tertiary": "#ffffff",
+          "surface-container-high": "#e8e8e6",
+          "tertiary-fixed-dim": "#ffb955",
+          "error-container": "#ffdad6",
+          "on-primary-fixed": "#002203",
+          "inverse-primary": "#4be253",
+          "secondary-fixed": "#e5e2e1",
+          "surface-variant": "#e2e3e1",
+          "on-tertiary-fixed": "#291800",
+          "outline-variant": "#bccbb5",
+          "on-primary-container": "#00500e",
+          "surface-bright": "#f9f9f7",
+          "primary-fixed-dim": "#4be253",
+          "surface-tint": "#006e17",
+          "inverse-on-surface": "#f1f1ef",
+          "primary": "#006e17",
+          "on-error": "#ffffff",
+          "on-secondary-fixed-variant": "#474746",
+          "on-surface-variant": "#3d4a3a",
+          "surface-dim": "#dadad8",
+          "surface-container-lowest": "#ffffff",
+          "surface-container-highest": "#e2e3e1",
+          "surface-container-low": "#f4f4f2",
+          "primary-container": "#2ecc40",
+          "on-primary-fixed-variant": "#00530f",
+          "on-background": "#1a1c1b",
+          "on-tertiary-fixed-variant": "#633f00",
+          "on-secondary-container": "#636262",
+          "secondary": "#5f5e5e",
+          "on-error-container": "#93000a",
+          "primary-fixed": "#72ff72",
+          "on-primary": "#ffffff",
+          "secondary-fixed-dim": "#c8c6c5",
+          "inverse-surface": "#2f3130",
+          "on-surface": "#1a1c1b",
+          "background": "#f9f9f7",
+          "outline": "#6d7b68",
+          "tertiary-container": "#efa11d",
+          "surface": "#f9f9f7",
+          "on-secondary": "#ffffff",
+          "secondary-container": "#e2dfde",
+          "on-tertiary-container": "#5f3c00"
+        },
+        fontFamily: {
+          "headline": ["Plus Jakarta Sans", "sans-serif"],
+          "body": ["Be Vietnam Pro", "sans-serif"],
+          "label": ["Be Vietnam Pro", "sans-serif"]
+        },
+        borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .hero-pattern { background-image: radial-gradient(circle at 2px 2px, rgba(0,110,23,0.05) 1px, transparent 0); background-size: 32px 32px; }
+
+  /* Multi-step form */
+  .form-step { display: none; }
+  .form-step.active { display: block; }
+
+  /* Role radio toggle */
+  .role-toggle input[type="radio"]:checked + span { background: #2ecc40; color: #00500e; font-weight: 700; }
+
+  /* Survey pill options */
+  .survey-option {
+    display: inline-flex; align-items: center; padding: 8px 18px;
+    border: 1.5px solid #bccbb5; border-radius: 999px; cursor: pointer;
+    font-size: 14px; font-weight: 500; color: #3d4a3a; background: #fff;
+    transition: all 0.15s ease; margin: 4px; user-select: none;
+  }
+  .survey-option:hover { border-color: #006e17; color: #006e17; }
+  .survey-option.selected { border-color: #006e17; background: #006e17; color: #fff; }
+
+  /* Progress bar */
+  .progress-bar { height: 4px; background: #e2e3e1; border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #006e17, #2ecc40); transition: width 0.4s ease; }
+
+  /* Earnings calculator slider */
+  input[type="range"] {
+    -webkit-appearance: none; appearance: none;
+    width: 100%; height: 6px; background: rgba(255,255,255,0.15);
+    border-radius: 9999px; outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 20px; height: 20px;
+    border-radius: 50%; background: #2ecc40; cursor: pointer;
+    box-shadow: 0 2px 8px rgba(46,204,64,0.4);
+  }
+
+  /* Success animation */
+  @keyframes popIn { 0%{transform:scale(0.6);opacity:0} 70%{transform:scale(1.1)} 100%{transform:scale(1);opacity:1} }
+  .pop-in { animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+
+  /* Spinner */
+  @keyframes spin { to{transform:rotate(360deg)} }
+  .spinner { animation: spin 0.7s linear infinite; }
+</style>
+</head>
+<body class="bg-surface font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+
+<!-- ══ NAV ══ -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md shadow-sm">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+    <a class="flex items-center gap-1.5 group" href="#">
+      <span class="material-symbols-outlined text-primary text-3xl group-hover:scale-110 transition-transform">share_reviews</span>
+      <span class="text-xl font-bold tracking-tighter text-on-surface font-headline">
+        <span>LIB</span><span class="text-primary-container">RENTA</span>
+      </span>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a class="font-headline text-sm font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors" href="#how">Cómo funciona</a>
+      <a class="font-headline text-sm font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors" href="#providers">Sé prestador</a>
+    </div>
+    <a href="#registro" class="bg-primary hover:bg-on-primary-fixed-variant text-on-primary px-6 py-2.5 rounded-lg font-headline text-sm font-bold transition-all active:scale-95 shadow-lg shadow-primary/10">
+      Únete gratis
+    </a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<header class="relative pt-32 pb-20 px-6 hero-pattern overflow-hidden">
+  <div class="max-w-7xl mx-auto flex flex-col items-center text-center">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-tertiary-fixed/30 text-on-tertiary-fixed font-bold text-xs mb-4 uppercase tracking-widest font-headline border border-tertiary-fixed/40">
+      <span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span>
+      📍 Piloto Alicante · Primavera 2026
+    </div>
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-container/10 text-primary font-bold text-xs mb-8 uppercase tracking-widest font-headline">
+      <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">bolt</span>
+      Tu aventura empieza aquí
+    </div>
+    <h1 class="text-5xl md:text-7xl font-extrabold font-headline tracking-tight text-on-surface mb-6 max-w-4xl leading-[1.1]">
+      Alquila en vez de <span class="text-primary">comprar</span>
+    </h1>
+    <p class="text-xl text-on-surface-variant mb-12 max-w-2xl font-light">
+      Cerca de ti, a tus horarios y hasta un 70% más barato que en tienda. La mayor red de material deportivo entre particulares de España. <strong class="text-on-surface font-semibold">Primero en Alicante.</strong>
+    </p>
+    <!-- Search Bar (visual demo) -->
+    <div class="w-full max-w-3xl bg-surface-container-lowest p-2 rounded-2xl shadow-2xl shadow-on-surface/5 flex flex-col md:flex-row items-stretch gap-2 mb-10 focus-within:ring-2 ring-primary/20 transition-all">
+      <div class="flex-1 flex items-center px-4 gap-3">
+        <span class="material-symbols-outlined text-outline">search</span>
+        <input class="w-full border-none focus:ring-0 text-on-surface placeholder:text-outline-variant bg-transparent py-4 font-medium" placeholder="¿Qué necesitas? kayak, bici de montaña, tabla de surf…" type="text"/>
+      </div>
+      <a href="#registro" class="bg-primary-container text-on-primary-container px-8 py-4 rounded-xl font-headline font-bold hover:brightness-95 transition-all flex items-center justify-center gap-2">
+        Buscar <span class="material-symbols-outlined">arrow_forward</span>
+      </a>
+    </div>
+    <!-- Category Chips -->
+    <div class="flex flex-wrap justify-center gap-3 max-w-4xl">
+      <button class="px-5 py-2 rounded-full bg-surface-container-high hover:bg-primary-container/20 transition-colors flex items-center gap-2 text-sm font-semibold border border-outline-variant/10">🏄 Surf</button>
+      <button class="px-5 py-2 rounded-full bg-surface-container-high hover:bg-primary-container/20 transition-colors flex items-center gap-2 text-sm font-semibold border border-outline-variant/10">🚵 MTB</button>
+      <button class="px-5 py-2 rounded-full bg-surface-container-high hover:bg-primary-container/20 transition-colors flex items-center gap-2 text-sm font-semibold border border-outline-variant/10">🛶 Kayak/Paddle</button>
+      <button class="px-5 py-2 rounded-full bg-surface-container-high hover:bg-primary-container/20 transition-colors flex items-center gap-2 text-sm font-semibold border border-outline-variant/10">🥾 Senderismo</button>
+      <button class="px-5 py-2 rounded-full bg-surface-container-high hover:bg-primary-container/20 transition-colors flex items-center gap-2 text-sm font-semibold border border-outline-variant/10">⛷️ Esquí</button>
+      <button class="px-5 py-2 rounded-full bg-surface-container-high hover:bg-primary-container/20 transition-colors flex items-center gap-2 text-sm font-semibold border border-outline-variant/10">⛺ Camping</button>
+      <button class="px-5 py-2 rounded-full bg-surface-container-high hover:bg-primary-container/20 transition-colors flex items-center gap-2 text-sm font-semibold border border-outline-variant/10">🧗 Escalada</button>
+    </div>
+  </div>
+</header>
+
+<!-- ══ AD GRID ══ -->
+<section class="py-24 bg-surface-container-low">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex justify-between items-end mb-12">
+      <div>
+        <h2 class="text-3xl font-headline font-extrabold text-on-surface mb-2 tracking-tight">Material disponible cerca de ti</h2>
+        <p class="text-on-surface-variant">Explora los favoritos de tu comunidad esta semana.</p>
+      </div>
+      <a class="text-primary font-bold flex items-center gap-1 hover:underline underline-offset-4 decoration-2" href="#registro">Ver todo <span class="material-symbols-outlined text-sm">open_in_new</span></a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Card 1 -->
+      <div class="group bg-surface-container-lowest rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300">
+        <div class="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-primary/10 to-primary-container/20 flex items-center justify-center">
+          <span class="material-symbols-outlined text-8xl text-primary/30">surfing</span>
+          <span class="absolute top-4 left-4 bg-tertiary-fixed text-on-tertiary-fixed px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider font-headline">Muy popular</span>
+          <button class="absolute top-4 right-4 p-2 bg-surface/80 backdrop-blur rounded-full hover:bg-primary hover:text-on-primary transition-colors">
+            <span class="material-symbols-outlined text-xl">favorite</span>
+          </button>
+        </div>
+        <div class="p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 rounded-full bg-primary-container/30 flex items-center justify-center text-xs font-bold text-on-primary-container">MR</div>
+            <span class="text-xs text-on-surface-variant font-medium">María R. • Alicante</span>
+          </div>
+          <h3 class="font-headline font-bold text-xl mb-1 text-on-surface">Surfboard longboard 9'2</h3>
+          <p class="text-sm text-outline mb-4 flex items-center gap-1"><span class="material-symbols-outlined text-sm">location_on</span> El Campello · a 2.4 km</p>
+          <div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+            <span class="text-2xl font-extrabold text-primary font-headline">18€<span class="text-sm text-outline font-medium">/día</span></span>
+            <span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface-container-high text-xs font-bold text-on-surface">
+              <span class="material-symbols-outlined text-[14px] text-tertiary" style="font-variation-settings: 'FILL' 1;">star</span> 4.9
+            </span>
+          </div>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="group bg-surface-container-lowest rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300">
+        <div class="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-tertiary/10 to-tertiary-fixed/30 flex items-center justify-center">
+          <span class="material-symbols-outlined text-8xl text-tertiary/30">directions_bike</span>
+          <span class="absolute top-4 left-4 bg-primary-container text-on-primary-container px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider font-headline">Popular</span>
+        </div>
+        <div class="p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 rounded-full bg-tertiary-container/30 flex items-center justify-center text-xs font-bold text-on-tertiary-container">CS</div>
+            <span class="text-xs text-on-surface-variant font-medium">Carlos S. • San Juan</span>
+          </div>
+          <h3 class="font-headline font-bold text-xl mb-1 text-on-surface">MTB Trek Marlin 7</h3>
+          <p class="text-sm text-outline mb-4 flex items-center gap-1"><span class="material-symbols-outlined text-sm">location_on</span> San Juan · a 5.1 km</p>
+          <div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+            <span class="text-2xl font-extrabold text-primary font-headline">25€<span class="text-sm text-outline font-medium">/día</span></span>
+            <span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface-container-high text-xs font-bold text-on-surface">
+              <span class="material-symbols-outlined text-[14px] text-tertiary" style="font-variation-settings: 'FILL' 1;">star</span> 5.0
+            </span>
+          </div>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="group bg-surface-container-lowest rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300">
+        <div class="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-primary/5 to-primary-container/15 flex items-center justify-center">
+          <span class="material-symbols-outlined text-8xl text-primary/20">kayaking</span>
+          <span class="absolute top-4 left-4 bg-secondary-fixed text-on-secondary-fixed-variant px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider font-headline">Nuevo</span>
+        </div>
+        <div class="p-6">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 rounded-full bg-outline-variant/30 flex items-center justify-center text-xs font-bold text-on-secondary-container">JT</div>
+            <span class="text-xs text-on-surface-variant font-medium">Jorge T. • Punta Prima</span>
+          </div>
+          <h3 class="font-headline font-bold text-xl mb-1 text-on-surface">Double kayak (Pro)</h3>
+          <p class="text-sm text-outline mb-4 flex items-center gap-1"><span class="material-symbols-outlined text-sm">location_on</span> Punta Prima · a 12 km</p>
+          <div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+            <span class="text-2xl font-extrabold text-primary font-headline">35€<span class="text-sm text-outline font-medium">/día</span></span>
+            <span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface-container-high text-xs font-bold text-on-surface">
+              <span class="material-symbols-outlined text-[14px] text-tertiary" style="font-variation-settings: 'FILL' 1;">star</span> 4.8
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section class="py-24 bg-surface">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-3xl font-headline font-extrabold text-center text-on-surface mb-16 tracking-tight">Voces de nuestra comunidad</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-surface-container p-8 rounded-3xl relative">
+        <span class="material-symbols-outlined text-primary-container text-5xl opacity-20 absolute top-4 right-8">format_quote</span>
+        <div class="flex gap-1 text-tertiary mb-4">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+        </div>
+        <p class="text-on-surface mb-6 font-medium italic">"Pude probar el longboard de mis sueños por una fracción de lo que cuesta comprarlo. ¡Repetiré seguro!"</p>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center font-bold text-primary">MR</div>
+          <div><h4 class="font-bold text-on-surface">María R.</h4><span class="text-xs text-on-surface-variant">Alquiló: Surfboard · El Campello</span></div>
+        </div>
+      </div>
+      <div class="bg-surface-container-high p-8 rounded-3xl relative md:translate-y-4">
+        <span class="material-symbols-outlined text-primary-container text-5xl opacity-20 absolute top-4 right-8">format_quote</span>
+        <div class="flex gap-1 text-tertiary mb-4">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+        </div>
+        <p class="text-on-surface mb-6 font-medium italic">"La Trek estaba impecable. El proceso fue súper rápido. He ahorrado más de 200€ este verano."</p>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full bg-tertiary-container/30 flex items-center justify-center font-bold text-on-tertiary-container">CS</div>
+          <div><h4 class="font-bold text-on-surface">Carlos S.</h4><span class="text-xs text-on-surface-variant">Alquiló: Mountain Bike · San Juan</span></div>
+        </div>
+      </div>
+      <div class="bg-surface-container p-8 rounded-3xl relative">
+        <span class="material-symbols-outlined text-primary-container text-5xl opacity-20 absolute top-4 right-8">format_quote</span>
+        <div class="flex gap-1 text-tertiary mb-4">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+        </div>
+        <p class="text-on-surface mb-6 font-medium italic">"Mi kayak lleva meses en el garaje. Con LIBRENTA ya está generando €280 al mes sin que yo haga nada."</p>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full bg-outline-variant/30 flex items-center justify-center font-bold text-on-secondary-container">JT</div>
+          <div><h4 class="font-bold text-on-surface">Jorge T.</h4><span class="text-xs text-on-surface-variant">Presta: Double Kayak · Punta Prima</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ══ -->
+<section class="py-24 bg-surface-container-lowest" id="how">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-headline font-extrabold text-on-surface mb-4">Cómo funciona</h2>
+      <div class="h-1.5 w-24 bg-primary-container mx-auto rounded-full"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+      <div class="hidden md:block absolute top-12 left-1/4 right-1/4 h-0.5 border-t-2 border-dashed border-primary-container/30 z-0"></div>
+      <div class="relative z-10 text-center">
+        <div class="w-20 h-20 bg-primary-container/10 rounded-2xl flex items-center justify-center text-primary mx-auto mb-6 rotate-3">
+          <span class="material-symbols-outlined text-4xl">search_check</span>
+        </div>
+        <h3 class="font-headline font-bold text-xl mb-3">1. Busca y elige</h3>
+        <p class="text-on-surface-variant">Encuentra el equipo que necesitas cerca de tu ubicación en Alicante.</p>
+      </div>
+      <div class="relative z-10 text-center">
+        <div class="w-20 h-20 bg-primary-container/10 rounded-2xl flex items-center justify-center text-primary mx-auto mb-6 -rotate-3">
+          <span class="material-symbols-outlined text-4xl">event_available</span>
+        </div>
+        <h3 class="font-headline font-bold text-xl mb-3">2. Reserva y recoge</h3>
+        <p class="text-on-surface-variant">Paga de forma segura y queda con el prestador para recoger el material.</p>
+      </div>
+      <div class="relative z-10 text-center">
+        <div class="w-20 h-20 bg-primary-container/10 rounded-2xl flex items-center justify-center text-primary mx-auto mb-6 rotate-6">
+          <span class="material-symbols-outlined text-4xl">surfing</span>
+        </div>
+        <h3 class="font-headline font-bold text-xl mb-3">3. Disfruta y devuelve</h3>
+        <p class="text-on-surface-variant">Vive tu aventura al máximo y devuelve el material al finalizar el alquiler.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BENEFITS BAR ══ -->
+<section class="py-12 bg-primary">
+  <div class="max-w-7xl mx-auto px-6 overflow-x-auto">
+    <div class="flex items-center justify-between gap-8 min-w-max">
+      <div class="flex items-center gap-3 text-on-primary"><span class="material-symbols-outlined">verified_user</span><span class="text-sm font-bold tracking-tight">Todo garantizado</span></div>
+      <div class="flex items-center gap-3 text-on-primary"><span class="material-symbols-outlined">group</span><span class="text-sm font-bold tracking-tight">Usuarios verificados</span></div>
+      <div class="flex items-center gap-3 text-on-primary"><span class="material-symbols-outlined">savings</span><span class="text-sm font-bold tracking-tight">Hasta un 70% más barato</span></div>
+      <div class="flex items-center gap-3 text-on-primary"><span class="material-symbols-outlined">map</span><span class="text-sm font-bold tracking-tight">Cerca de ti</span></div>
+      <div class="flex items-center gap-3 text-on-primary"><span class="material-symbols-outlined">schedule</span><span class="text-sm font-bold tracking-tight">A tu horario</span></div>
+      <div class="flex items-center gap-3 text-on-primary"><span class="material-symbols-outlined">eco</span><span class="text-sm font-bold tracking-tight">Bueno para el planeta</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROVIDERS ══ -->
+<section class="py-24 bg-on-background text-surface overflow-hidden relative" id="providers">
+  <div class="absolute top-0 right-0 w-96 h-96 bg-primary-container/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
+  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <div>
+      <h2 class="text-4xl md:text-5xl font-headline font-extrabold mb-6 leading-tight">Lo que no usas,<br/><span class="text-primary-container">que rente por ti</span></h2>
+      <p class="text-lg text-outline-variant mb-10 max-w-lg font-light leading-relaxed">
+        Saca provecho de tu material deportivo mientras no lo usas. Ayuda a tu comunidad y empieza a generar ingresos extra hoy mismo.
+      </p>
+      <!-- Earnings Calculator -->
+      <div class="bg-surface-container-high/5 p-8 rounded-3xl border border-white/5 backdrop-blur-sm">
+        <h4 class="font-headline font-bold text-lg mb-8 text-surface">Calculadora de ganancias</h4>
+        <div class="space-y-8">
+          <div>
+            <div class="flex justify-between mb-3">
+              <span class="text-sm font-medium text-surface/80">Días al mes que alquilas</span>
+              <span class="text-primary-container font-bold" id="daysLabel">12 días</span>
+            </div>
+            <input class="w-full" type="range" min="1" max="28" value="12" id="daysSlider" oninput="calcEarnings()"/>
+          </div>
+          <div>
+            <div class="flex justify-between mb-3">
+              <span class="text-sm font-medium text-surface/80">Precio por día</span>
+              <span class="text-primary-container font-bold" id="priceLabel">35€</span>
+            </div>
+            <input class="w-full" type="range" min="10" max="100" value="35" id="priceSlider" oninput="calcEarnings()"/>
+          </div>
+        </div>
+        <div class="mt-10 pt-8 border-t border-white/5 flex items-end justify-between gap-4">
+          <div>
+            <p class="text-xs uppercase tracking-widest text-outline-variant mb-1 font-bold">Podrías ganar hasta</p>
+            <p class="text-5xl font-extrabold font-headline text-primary-container" id="earningsResult">315€<span class="text-xl text-surface/60">/mes</span></p>
+          </div>
+          <a href="#registro" class="bg-primary-container text-on-primary-container px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:scale-105 transition-transform shrink-0">
+            Empieza a prestar <span class="material-symbols-outlined">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="relative">
+      <div class="absolute inset-0 bg-primary/20 blur-[100px] rounded-full scale-75"></div>
+      <div class="relative z-10 rounded-3xl w-full bg-gradient-to-br from-primary/20 to-primary-container/10 border border-white/10 p-12 flex items-center justify-center min-h-[400px]">
+        <div class="text-center">
+          <span class="material-symbols-outlined text-primary-container" style="font-size: 96px; font-variation-settings: 'FILL' 0;">garage</span>
+          <p class="text-surface/60 mt-4 font-medium">Tu equipo deportivo puede<br/>estar trabajando por ti</p>
+        </div>
+      </div>
+      <div class="absolute -bottom-6 -left-6 bg-surface p-6 rounded-2xl shadow-xl z-20 hidden md:block">
+        <div class="flex items-center gap-4 text-on-background">
+          <div class="bg-primary-container p-3 rounded-full">
+            <span class="material-symbols-outlined text-on-primary-container">shield</span>
+          </div>
+          <div>
+            <p class="text-sm font-bold">Seguro incluido</p>
+            <p class="text-xs text-outline font-medium">Tu equipo está protegido</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WAITLIST FORM WITH SURVEY ══ -->
+<section class="py-24 bg-surface-container-low relative" id="registro">
+  <div class="max-w-4xl mx-auto px-6">
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-tertiary-fixed/30 text-on-tertiary-fixed font-bold text-xs mb-6 uppercase tracking-widest font-headline border border-tertiary-fixed/40">
+        <span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span>
+        Lista de espera abierta
+      </div>
+      <h2 class="text-3xl font-headline font-extrabold text-on-surface mb-4">Únete a LIBRENTA Alicante</h2>
+      <p class="text-on-surface-variant">Estamos en fase piloto. Cuéntanos sobre ti — te avisamos cuando lancemos con ventajas exclusivas para los primeros.</p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-surface-container-lowest rounded-[40px] p-8 md:p-12 shadow-xl border border-outline-variant/5">
+
+      <!-- Progress -->
+      <div class="progress-bar mb-8">
+        <div class="progress-fill" id="progressFill" style="width: 33%"></div>
+      </div>
+
+      <!-- STEP 1: ROLE -->
+      <div class="form-step active" id="step1">
+        <h3 class="text-2xl font-headline font-extrabold text-on-surface mb-2">¿Cuál es tu situación?</h3>
+        <p class="text-on-surface-variant mb-8">Esto nos ayuda a entender mejor cómo podemos ayudarte.</p>
+
+        <div class="grid grid-cols-2 gap-4 p-2 bg-surface-container-low rounded-2xl mb-8" id="roleToggle">
+          <label class="relative flex flex-col items-center justify-center py-6 px-4 rounded-xl cursor-pointer transition-all hover:bg-surface-container-high" id="labelRenter">
+            <input class="hidden" name="role_visual" type="radio" value="renter" onchange="selectRole('renter')"/>
+            <span class="text-3xl mb-2">🏄</span>
+            <span class="font-headline font-bold text-on-surface text-sm">Quiero alquilar</span>
+            <span class="text-xs text-on-surface-variant text-center mt-1">Necesito material deportivo</span>
+          </label>
+          <label class="relative flex flex-col items-center justify-center py-6 px-4 rounded-xl cursor-pointer transition-all hover:bg-surface-container-high" id="labelOwner">
+            <input class="hidden" name="role_visual" type="radio" value="owner" onchange="selectRole('owner')"/>
+            <span class="text-3xl mb-2">🔑</span>
+            <span class="font-headline font-bold text-on-surface text-sm">Quiero prestar</span>
+            <span class="text-xs text-on-surface-variant text-center mt-1">Tengo equipo en el garaje</span>
+          </label>
+        </div>
+
+        <button class="w-full bg-primary text-on-primary py-5 rounded-2xl font-headline font-extrabold text-lg flex items-center justify-center gap-3 transition-all shadow-lg shadow-primary/20 opacity-50 cursor-not-allowed" id="btnStep1" disabled onclick="goStep(2)">
+          Continuar <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+
+      <!-- STEP 2: SURVEY -->
+      <div class="form-step" id="step2">
+        <!-- Renter questions -->
+        <div id="renterQ">
+          <h3 class="text-2xl font-headline font-extrabold text-on-surface mb-2">Cuéntanos sobre tu deporte 🏄</h3>
+          <p class="text-on-surface-variant mb-8">4 preguntas rápidas para entender qué necesitas en Alicante.</p>
+
+          <div class="mb-6">
+            <p class="text-sm font-bold text-on-surface mb-3">¿Qué deporte practicas principalmente?</p>
+            <div class="flex flex-wrap">
+              <span class="survey-option" onclick="pick(this,'sport')">🏄 Surf</span>
+              <span class="survey-option" onclick="pick(this,'sport')">🚣 Kayak/Piragua</span>
+              <span class="survey-option" onclick="pick(this,'sport')">🏂 SUP / Paddle</span>
+              <span class="survey-option" onclick="pick(this,'sport')">🚵 Bici MTB</span>
+              <span class="survey-option" onclick="pick(this,'sport')">Otro deporte</span>
+            </div>
+          </div>
+          <div class="mb-6">
+            <p class="text-sm font-bold text-on-surface mb-3">¿Con qué frecuencia necesitas material alquilado?</p>
+            <div class="flex flex-wrap">
+              <span class="survey-option" onclick="pick(this,'freq')">Cada semana</span>
+              <span class="survey-option" onclick="pick(this,'freq')">Fines de semana</span>
+              <span class="survey-option" onclick="pick(this,'freq')">En vacaciones</span>
+              <span class="survey-option" onclick="pick(this,'freq')">Alguna vez al año</span>
+            </div>
+          </div>
+          <div class="mb-6">
+            <p class="text-sm font-bold text-on-surface mb-3">¿Cuánto pagarías por día de alquiler?</p>
+            <div class="flex flex-wrap">
+              <span class="survey-option" onclick="pick(this,'budget')">Menos de €20</span>
+              <span class="survey-option" onclick="pick(this,'budget')">€20 – €35</span>
+              <span class="survey-option" onclick="pick(this,'budget')">€35 – €50</span>
+              <span class="survey-option" onclick="pick(this,'budget')">Más de €50</span>
+            </div>
+          </div>
+          <div class="mb-8">
+            <p class="text-sm font-bold text-on-surface mb-3">¿Dónde estás en Alicante?</p>
+            <div class="flex flex-wrap">
+              <span class="survey-option" onclick="pick(this,'zone')">Centro ciudad</span>
+              <span class="survey-option" onclick="pick(this,'zone')">El Campello</span>
+              <span class="survey-option" onclick="pick(this,'zone')">San Juan / Playa</span>
+              <span class="survey-option" onclick="pick(this,'zone')">Punta Prima</span>
+              <span class="survey-option" onclick="pick(this,'zone')">Otra zona</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Owner questions -->
+        <div id="ownerQ" style="display:none">
+          <h3 class="text-2xl font-headline font-extrabold text-on-surface mb-2">Cuéntanos sobre tu equipo 🔑</h3>
+          <p class="text-on-surface-variant mb-8">4 preguntas para calcular cuánto podrías ganar con LIBRENTA.</p>
+
+          <div class="mb-6">
+            <p class="text-sm font-bold text-on-surface mb-3">¿Qué tipo de material tienes?</p>
+            <div class="flex flex-wrap">
+              <span class="survey-option" onclick="pick(this,'equipment')">🏄 Tabla de Surf</span>
+              <span class="survey-option" onclick="pick(this,'equipment')">🚣 Kayak/Piragua</span>
+              <span class="survey-option" onclick="pick(this,'equipment')">🏂 SUP / Paddle</span>
+              <span class="survey-option" onclick="pick(this,'equipment')">🚵 Bici MTB</span>
+              <span class="survey-option" onclick="pick(this,'equipment')">Otro equipo</span>
+            </div>
+          </div>
+          <div class="mb-6">
+            <p class="text-sm font-bold text-on-surface mb-3">¿Cuántos meses al año está sin usar?</p>
+            <div class="flex flex-wrap">
+              <span class="survey-option" onclick="pick(this,'idle')">Menos de 3 meses</span>
+              <span class="survey-option" onclick="pick(this,'idle')">3 – 6 meses</span>
+              <span class="survey-option" onclick="pick(this,'idle')">6 – 9 meses</span>
+              <span class="survey-option" onclick="pick(this,'idle')">Todo el año</span>
+            </div>
+          </div>
+          <div class="mb-6">
+            <p class="text-sm font-bold text-on-surface mb-3">¿Qué te frenaría para alquilarlo?</p>
+            <div class="flex flex-wrap">
+              <span class="survey-option" onclick="pick(this,'blocker')">Miedo a daños</span>
+              <span class="survey-option" onclick="pick(this,'blocker')">Coordinar la entrega</span>
+              <span class="survey-option" onclick="pick(this,'blocker')">No saber el precio justo</span>
+              <span class="survey-option" onclick="pick(this,'blocker')">Nada, me sumo ya 🙌</span>
+            </div>
+          </div>
+          <div class="mb-8">
+            <p class="text-sm font-bold text-on-surface mb-3">¿Cuánto esperarías ganar al mes?</p>
+            <div class="flex flex-wrap">
+              <span class="survey-option" onclick="pick(this,'income')">€50 – €100</span>
+              <span class="survey-option" onclick="pick(this,'income')">€100 – €200</span>
+              <span class="survey-option" onclick="pick(this,'income')">€200 – €400</span>
+              <span class="survey-option" onclick="pick(this,'income')">Más de €400</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <button onclick="goStep(3)" class="w-full bg-primary text-on-primary py-5 rounded-2xl font-headline font-extrabold text-lg flex items-center justify-center gap-3 hover:brightness-110 active:scale-[0.99] transition-all shadow-lg shadow-primary/20">
+            Continuar <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+          <button onclick="goStep(1)" class="text-on-surface-variant text-sm font-medium hover:text-on-surface transition-colors">← Volver</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: CONTACT -->
+      <div class="form-step" id="step3">
+        <h3 class="text-2xl font-headline font-extrabold text-on-surface mb-2">¡Casi listo! 🎉</h3>
+        <p class="text-on-surface-variant mb-8">Déjanos tus datos y serás de los primeros en Alicante.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div class="space-y-1">
+            <label class="text-sm font-bold text-on-surface ml-1" for="inputName">Tu nombre</label>
+            <input class="w-full bg-surface-container-low border-none rounded-xl py-4 px-5 focus:ring-2 focus:ring-primary/20 font-body" id="inputName" placeholder="Ej. Alex García" type="text"/>
+          </div>
+          <div class="space-y-1">
+            <label class="text-sm font-bold text-on-surface ml-1" for="inputEmail">Tu email</label>
+            <input class="w-full bg-surface-container-low border-none rounded-xl py-4 px-5 focus:ring-2 focus:ring-primary/20 font-body" id="inputEmail" placeholder="hola@ejemplo.com" type="email"/>
+          </div>
+        </div>
+
+        <button id="btnSubmit" onclick="submitForm()" class="w-full bg-primary text-on-primary py-5 rounded-2xl font-headline font-extrabold text-lg flex items-center justify-center gap-3 hover:brightness-110 active:scale-[0.99] transition-all shadow-lg shadow-primary/20 mb-4">
+          <span id="btnText">Apuntarme a la lista de espera</span>
+          <span class="material-symbols-outlined" id="btnIcon">rocket_launch</span>
+          <svg class="spinner hidden w-5 h-5 border-2 border-white/30 border-t-white rounded-full" id="btnSpinner" viewBox="0 0 24 24"></svg>
+        </button>
+
+        <div class="flex flex-col gap-3">
+          <button onclick="goStep(2)" class="text-on-surface-variant text-sm font-medium hover:text-on-surface transition-colors">← Volver</button>
+          <p class="text-center text-xs text-outline">🔒 Al unirte aceptas recibir actualizaciones exclusivas. Cero spam, lo prometemos.</p>
+        </div>
+
+        <!-- Hidden Netlify form -->
+        <form name="librenta-leads" data-netlify="true" netlify-honeypot="bot-field" id="netlifyForm" style="display:none">
+          <input type="hidden" name="form-name" value="librenta-leads"/>
+          <input type="hidden" name="bot-field"/>
+          <input type="hidden" name="rol" id="hRol"/>
+          <input type="hidden" name="deporte_equipo" id="hSport"/>
+          <input type="hidden" name="frecuencia_meses" id="hFreq"/>
+          <input type="hidden" name="presupuesto_ingresos" id="hBudget"/>
+          <input type="hidden" name="zona_alicante" id="hZone"/>
+          <input type="hidden" name="freno_principal" id="hBlocker"/>
+          <input type="hidden" name="nombre" id="hName"/>
+          <input type="email" name="email" id="hEmail"/>
+        </form>
+      </div>
+
+      <!-- SUCCESS -->
+      <div class="hidden text-center py-8" id="successState">
+        <div class="w-20 h-20 rounded-full bg-primary-container/20 flex items-center justify-center mx-auto mb-6 pop-in">
+          <span class="material-symbols-outlined text-5xl text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+        </div>
+        <h3 class="text-2xl font-headline font-extrabold text-on-surface mb-3">¡Ya estás en la lista! 🎉</h3>
+        <p class="text-on-surface-variant max-w-md mx-auto">
+          Eres uno de los primeros en Alicante.<br>
+          Te escribiremos en cuanto abramos el acceso con ventajas exclusivas para early adopters.<br><br>
+          <strong class="text-on-surface">Mientras tanto, si conoces a alguien con material deportivo en el garaje… ¡cuéntales!</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="bg-surface-container-low w-full py-16 px-6 border-t border-outline-variant/15">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+    <div class="max-w-sm">
+      <a class="flex items-center gap-1.5 mb-6" href="#">
+        <span class="material-symbols-outlined text-primary text-2xl">share_reviews</span>
+        <span class="text-lg font-black text-on-surface font-headline">LIBRENTA</span>
+      </a>
+      <p class="font-body text-sm text-on-surface-variant mb-4 leading-relaxed">
+        La plataforma que conecta a deportistas para compartir material y aventuras. Alquila local, alquila mejor.
+      </p>
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-tertiary-fixed/20 text-on-tertiary-fixed text-xs font-bold border border-tertiary-fixed/30">
+        📍 Piloto Alicante · Primavera 2026
+      </div>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-12 w-full md:w-auto">
+      <div class="space-y-4">
+        <h5 class="font-headline font-bold text-sm uppercase tracking-widest text-on-surface">Explora</h5>
+        <ul class="space-y-3">
+          <li><a class="font-body text-sm text-on-surface-variant hover:text-primary transition-all" href="#how">Cómo funciona</a></li>
+          <li><a class="font-body text-sm text-on-surface-variant hover:text-primary transition-all" href="#registro">Categorías</a></li>
+          <li><a class="font-body text-sm text-on-surface-variant hover:text-primary transition-all" href="#">Seguridad</a></li>
+        </ul>
+      </div>
+      <div class="space-y-4">
+        <h5 class="font-headline font-bold text-sm uppercase tracking-widest text-on-surface">Soporte</h5>
+        <ul class="space-y-3">
+          <li><a class="font-body text-sm text-on-surface-variant hover:text-primary transition-all" href="#">FAQs</a></li>
+          <li><a class="font-body text-sm text-on-surface-variant hover:text-primary transition-all" href="mailto:hola@librenta.es">Contacto</a></li>
+          <li><a class="font-body text-sm text-on-surface-variant hover:text-primary transition-all" href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div class="space-y-4">
+        <h5 class="font-headline font-bold text-sm uppercase tracking-widest text-on-surface">Legal</h5>
+        <ul class="space-y-3">
+          <li><a class="font-body text-sm text-on-surface-variant hover:text-primary transition-all" href="#">Privacidad</a></li>
+          <li><a class="font-body text-sm text-on-surface-variant hover:text-primary transition-all" href="#">Términos</a></li>
+          <li><a class="font-body text-sm text-on-surface-variant hover:text-primary transition-all" href="#">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="font-body text-xs text-on-surface-variant">© 2026 LIBRENTA. Lo que no usas, renta.</p>
+    <div class="flex items-center gap-6">
+      <span class="flex items-center gap-1.5 text-xs text-on-surface-variant"><span class="material-symbols-outlined text-sm">language</span> Español (ES)</span>
+      <span class="flex items-center gap-1.5 text-xs text-on-surface-variant"><span class="material-symbols-outlined text-sm">euro</span> EUR</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── STATE ──
+let currentRole = null;
+const data = {};
+
+// ── EARNINGS CALCULATOR ──
+function calcEarnings() {
+  const days = parseInt(document.getElementById('daysSlider').value);
+  const price = parseInt(document.getElementById('priceSlider').value);
+  const earn = Math.round(days * price * 0.75); // 75% to owner after 25% commission
+  document.getElementById('daysLabel').textContent = days + ' días';
+  document.getElementById('priceLabel').textContent = price + '€';
+  document.getElementById('earningsResult').innerHTML = earn + '€<span class="text-xl text-surface/60">/mes</span>';
+}
+calcEarnings();
+
+// ── ROLE SELECTION ──
+function selectRole(role) {
+  currentRole = role;
+  data['rol'] = role === 'renter' ? 'Arrendatario (Deportista)' : 'Arrendador (Propietario)';
+
+  const lR = document.getElementById('labelRenter');
+  const lO = document.getElementById('labelOwner');
+  if (role === 'renter') {
+    lR.classList.add('bg-primary-container/20', 'ring-2', 'ring-primary/30');
+    lO.classList.remove('bg-primary-container/20', 'ring-2', 'ring-primary/30');
+  } else {
+    lO.classList.add('bg-primary-container/20', 'ring-2', 'ring-primary/30');
+    lR.classList.remove('bg-primary-container/20', 'ring-2', 'ring-primary/30');
+  }
+  const btn = document.getElementById('btnStep1');
+  btn.disabled = false;
+  btn.classList.remove('opacity-50', 'cursor-not-allowed');
+  btn.classList.add('hover:brightness-110', 'active:scale-[0.99]');
+}
+
+// ── SURVEY PILL SELECTION ──
+function pick(el, group) {
+  el.closest('.flex').querySelectorAll('.survey-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  data[group] = el.textContent.trim().replace(/^[\u{1F300}-\u{1F9FF}\s]+/u, '').trim();
+}
+
+// ── STEP NAVIGATION ──
+function goStep(n) {
+  document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step' + n).classList.add('active');
+
+  const prog = {1:'33%', 2:'66%', 3:'100%'};
+  document.getElementById('progressFill').style.width = prog[n] || '33%';
+
+  if (n === 2) {
+    document.getElementById('renterQ').style.display = currentRole === 'renter' ? 'block' : 'none';
+    document.getElementById('ownerQ').style.display = currentRole === 'owner' ? 'block' : 'none';
+  }
+  document.getElementById('registro').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ── FORM SUBMIT ──
+async function submitForm() {
+  const name = document.getElementById('inputName').value.trim();
+  const email = document.getElementById('inputEmail').value.trim();
+  if (!name || !email || !email.includes('@')) {
+    if (!name) document.getElementById('inputName').classList.add('ring-2','ring-red-400');
+    if (!email || !email.includes('@')) document.getElementById('inputEmail').classList.add('ring-2','ring-red-400');
+    return;
+  }
+
+  // Spinner
+  document.getElementById('btnText').textContent = 'Enviando…';
+  document.getElementById('btnIcon').style.display = 'none';
+  document.getElementById('btnSpinner').classList.remove('hidden');
+  document.getElementById('btnSubmit').disabled = true;
+
+  // Fill hidden form
+  document.getElementById('hRol').value = data['rol'] || '';
+  document.getElementById('hSport').value = data['sport'] || data['equipment'] || '';
+  document.getElementById('hFreq').value = data['freq'] || data['idle'] || '';
+  document.getElementById('hBudget').value = data['budget'] || data['income'] || '';
+  document.getElementById('hZone').value = data['zone'] || '';
+  document.getElementById('hBlocker').value = data['blocker'] || '';
+  document.getElementById('hName').value = name;
+  document.getElementById('hEmail').value = email;
+
+  const form = document.getElementById('netlifyForm');
+  const formData = new FormData(form);
+
+  try {
+    await fetch('/', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: new URLSearchParams(formData).toString()
+    });
+  } catch(e) { /* show success anyway */ }
+
+  showSuccess();
+}
+
+function showSuccess() {
+  document.getElementById('step3').style.display = 'none';
+  const s = document.getElementById('successState');
+  s.classList.remove('hidden');
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressFill').style.background = '#006e17';
+}
+
+// ── SMOOTH SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    const t = document.querySelector(this.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
+  });
+});
+</script>
+</body>
+</html>
