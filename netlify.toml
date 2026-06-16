@@ -1,22 +1,19 @@
 [build]
   publish = "."
 
-# Cabeceras de seguridad y rendimiento
+# Cabeceras de seguridad y rendimiento.
+# CSP completa pendiente hasta retirar Tailwind CDN y Google Fonts externos.
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
 
-# Cache largo para assets estáticos
+# Cache largo para assets estaticos.
 [[headers]]
-  for = "/*.css"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/*.js"
+  for = "/assets/*.js"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"

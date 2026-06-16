@@ -116,6 +116,17 @@
   /* Spinner */
   @keyframes spin { to{transform:rotate(360deg)} }
   .spinner { animation: spin 0.7s linear infinite; }
+  .field-error { color: #ba1a1a; font-size: 0.8125rem; font-weight: 600; min-height: 1.25rem; }
+  .input-error { box-shadow: 0 0 0 2px rgba(186,26,26,0.45); }
+  .netlify-hidden-form {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 </style>
 </head>
 <body class="bg-surface font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container">
@@ -452,7 +463,7 @@
           </label>
         </div>
 
-        <button class="w-full bg-primary text-on-primary py-5 rounded-2xl font-headline font-extrabold text-lg flex items-center justify-center gap-3 transition-all shadow-lg shadow-primary/20 opacity-50 cursor-not-allowed" id="btnStep1" disabled onclick="goStep(2)">
+        <button type="button" class="w-full bg-primary text-on-primary py-5 rounded-2xl font-headline font-extrabold text-lg flex items-center justify-center gap-3 transition-all shadow-lg shadow-primary/20 opacity-50 cursor-not-allowed" id="btnStep1" disabled onclick="goStep(2)">
           Continuar <span class="material-symbols-outlined">arrow_forward</span>
         </button>
       </div>
@@ -549,10 +560,10 @@
         </div>
 
         <div class="flex flex-col gap-3">
-          <button onclick="goStep(3)" class="w-full bg-primary text-on-primary py-5 rounded-2xl font-headline font-extrabold text-lg flex items-center justify-center gap-3 hover:brightness-110 active:scale-[0.99] transition-all shadow-lg shadow-primary/20">
+          <button type="button" onclick="goStep(3)" class="w-full bg-primary text-on-primary py-5 rounded-2xl font-headline font-extrabold text-lg flex items-center justify-center gap-3 hover:brightness-110 active:scale-[0.99] transition-all shadow-lg shadow-primary/20">
             Continuar <span class="material-symbols-outlined">arrow_forward</span>
           </button>
-          <button onclick="goStep(1)" class="text-on-surface-variant text-sm font-medium hover:text-on-surface transition-colors">← Volver</button>
+          <button type="button" onclick="goStep(1)" class="text-on-surface-variant text-sm font-medium hover:text-on-surface transition-colors">← Volver</button>
         </div>
       </div>
 
@@ -564,42 +575,49 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div class="space-y-1">
             <label class="text-sm font-bold text-on-surface ml-1" for="inputName">Tu nombre</label>
-            <input class="w-full bg-surface-container-low border-none rounded-xl py-4 px-5 focus:ring-2 focus:ring-primary/20 font-body" id="inputName" placeholder="Ej. Alex García" type="text"/>
+            <input class="w-full bg-surface-container-low border-none rounded-xl py-4 px-5 focus:ring-2 focus:ring-primary/20 font-body" id="inputName" name="nombre_visible" placeholder="Ej. Alex García" type="text" autocomplete="given-name" required minlength="2" maxlength="80" aria-describedby="inputNameError"/>
+            <p class="field-error" id="inputNameError" aria-live="polite"></p>
           </div>
           <div class="space-y-1">
             <label class="text-sm font-bold text-on-surface ml-1" for="inputEmail">Tu email</label>
-            <input class="w-full bg-surface-container-low border-none rounded-xl py-4 px-5 focus:ring-2 focus:ring-primary/20 font-body" id="inputEmail" placeholder="hola@ejemplo.com" type="email"/>
+            <input class="w-full bg-surface-container-low border-none rounded-xl py-4 px-5 focus:ring-2 focus:ring-primary/20 font-body" id="inputEmail" name="email_visible" placeholder="hola@ejemplo.com" type="email" autocomplete="email" required minlength="6" maxlength="254" aria-describedby="inputEmailError"/>
+            <p class="field-error" id="inputEmailError" aria-live="polite"></p>
           </div>
         </div>
 
-        <button id="btnSubmit" onclick="submitForm()" class="w-full bg-primary text-on-primary py-5 rounded-2xl font-headline font-extrabold text-lg flex items-center justify-center gap-3 hover:brightness-110 active:scale-[0.99] transition-all shadow-lg shadow-primary/20 mb-4">
+        <div class="field-error mb-4" id="formStatus" aria-live="assertive" tabindex="-1"></div>
+
+        <button id="btnSubmit" type="button" onclick="submitForm()" class="w-full bg-primary text-on-primary py-5 rounded-2xl font-headline font-extrabold text-lg flex items-center justify-center gap-3 hover:brightness-110 active:scale-[0.99] transition-all shadow-lg shadow-primary/20 mb-4">
           <span id="btnText">Apuntarme a la lista de espera</span>
           <span class="material-symbols-outlined" id="btnIcon">rocket_launch</span>
           <svg class="spinner hidden w-5 h-5 border-2 border-white/30 border-t-white rounded-full" id="btnSpinner" viewBox="0 0 24 24"></svg>
         </button>
 
         <div class="flex flex-col gap-3">
-          <button onclick="goStep(2)" class="text-on-surface-variant text-sm font-medium hover:text-on-surface transition-colors">← Volver</button>
+          <button type="button" onclick="goStep(2)" class="text-on-surface-variant text-sm font-medium hover:text-on-surface transition-colors">← Volver</button>
           <p class="text-center text-xs text-outline">🔒 Al unirte aceptas recibir actualizaciones exclusivas. Cero spam, lo prometemos.</p>
         </div>
 
         <!-- Hidden Netlify form -->
-        <form name="librenta-leads" data-netlify="true" netlify-honeypot="bot-field" id="netlifyForm" style="display:none">
+        <form name="librenta-leads" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" id="netlifyForm" class="netlify-hidden-form">
           <input type="hidden" name="form-name" value="librenta-leads"/>
-          <input type="hidden" name="bot-field"/>
+          <p>
+            <label for="botField">No rellenes este campo si eres humano</label>
+            <input name="bot-field" id="botField" tabindex="-1" autocomplete="off"/>
+          </p>
           <input type="hidden" name="rol" id="hRol"/>
           <input type="hidden" name="deporte_equipo" id="hSport"/>
           <input type="hidden" name="frecuencia_meses" id="hFreq"/>
           <input type="hidden" name="presupuesto_ingresos" id="hBudget"/>
           <input type="hidden" name="zona_alicante" id="hZone"/>
           <input type="hidden" name="freno_principal" id="hBlocker"/>
-          <input type="hidden" name="nombre" id="hName"/>
-          <input type="email" name="email" id="hEmail"/>
+          <input type="hidden" name="nombre" id="hName" required minlength="2" maxlength="80"/>
+          <input type="email" name="email" id="hEmail" required maxlength="254" tabindex="-1" autocomplete="email"/>
         </form>
       </div>
 
       <!-- SUCCESS -->
-      <div class="hidden text-center py-8" id="successState">
+      <div class="hidden text-center py-8" id="successState" aria-live="polite" tabindex="-1">
         <div class="w-20 h-20 rounded-full bg-primary-container/20 flex items-center justify-center mx-auto mb-6 pop-in">
           <span class="material-symbols-outlined text-5xl text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
         </div>
@@ -665,10 +683,12 @@
   </div>
 </footer>
 
+<script src="assets/js/lead-form.js"></script>
 <script>
 // ── STATE ──
 let currentRole = null;
 const data = {};
+let isSubmitting = false;
 
 // ── EARNINGS CALCULATOR ──
 function calcEarnings() {
@@ -703,10 +723,38 @@ function selectRole(role) {
 
 // ── SURVEY PILL SELECTION ──
 function pick(el, group) {
-  el.closest('.flex').querySelectorAll('.survey-option').forEach(o => o.classList.remove('selected'));
+  el.closest('.flex').querySelectorAll('.survey-option').forEach(o => {
+    o.classList.remove('selected');
+    o.setAttribute('aria-pressed', 'false');
+  });
   el.classList.add('selected');
+  el.setAttribute('aria-pressed', 'true');
   data[group] = el.textContent.trim().replace(/^[\u{1F300}-\u{1F9FF}\s]+/u, '').trim();
 }
+
+function initSurveyOptions() {
+  document.querySelectorAll('.survey-option').forEach(option => {
+    option.setAttribute('role', 'button');
+    option.setAttribute('tabindex', '0');
+    option.setAttribute('aria-pressed', 'false');
+    option.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        option.click();
+      }
+    });
+  });
+}
+initSurveyOptions();
+
+document.querySelectorAll('#inputName, #inputEmail').forEach(field => {
+  field.addEventListener('keydown', event => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      submitForm();
+    }
+  });
+});
 
 // ── STEP NAVIGATION ──
 function goStep(n) {
@@ -723,44 +771,119 @@ function goStep(n) {
   document.getElementById('registro').scrollIntoView({behavior:'smooth', block:'start'});
 }
 
-// ── FORM SUBMIT ──
-async function submitForm() {
-  const name = document.getElementById('inputName').value.trim();
-  const email = document.getElementById('inputEmail').value.trim();
-  if (!name || !email || !email.includes('@')) {
-    if (!name) document.getElementById('inputName').classList.add('ring-2','ring-red-400');
-    if (!email || !email.includes('@')) document.getElementById('inputEmail').classList.add('ring-2','ring-red-400');
+function getLeadValues() {
+  return {
+    rol: data['rol'] || '',
+    deporte_equipo: data['sport'] || data['equipment'] || '',
+    frecuencia_meses: data['freq'] || data['idle'] || '',
+    presupuesto_ingresos: data['budget'] || data['income'] || '',
+    zona_alicante: data['zone'] || '',
+    freno_principal: data['blocker'] || '',
+    nombre: document.getElementById('inputName').value,
+    email: document.getElementById('inputEmail').value,
+  };
+}
+
+function clearErrors() {
+  ['inputName', 'inputEmail'].forEach(id => {
+    const field = document.getElementById(id);
+    field.classList.remove('input-error');
+    field.removeAttribute('aria-invalid');
+  });
+  document.getElementById('inputNameError').textContent = '';
+  document.getElementById('inputEmailError').textContent = '';
+  document.getElementById('formStatus').textContent = '';
+}
+
+function showValidationErrors(errors) {
+  clearErrors();
+  const status = document.getElementById('formStatus');
+  const inputName = document.getElementById('inputName');
+  const inputEmail = document.getElementById('inputEmail');
+
+  if (errors.nombre) {
+    document.getElementById('inputNameError').textContent = errors.nombre;
+    inputName.classList.add('input-error');
+    inputName.setAttribute('aria-invalid', 'true');
+    inputName.focus();
     return;
   }
 
-  // Spinner
-  document.getElementById('btnText').textContent = 'Enviando…';
-  document.getElementById('btnIcon').style.display = 'none';
-  document.getElementById('btnSpinner').classList.remove('hidden');
-  document.getElementById('btnSubmit').disabled = true;
+  if (errors.email) {
+    document.getElementById('inputEmailError').textContent = errors.email;
+    inputEmail.classList.add('input-error');
+    inputEmail.setAttribute('aria-invalid', 'true');
+    inputEmail.focus();
+    return;
+  }
 
-  // Fill hidden form
-  document.getElementById('hRol').value = data['rol'] || '';
-  document.getElementById('hSport').value = data['sport'] || data['equipment'] || '';
-  document.getElementById('hFreq').value = data['freq'] || data['idle'] || '';
-  document.getElementById('hBudget').value = data['budget'] || data['income'] || '';
-  document.getElementById('hZone').value = data['zone'] || '';
-  document.getElementById('hBlocker').value = data['blocker'] || '';
-  document.getElementById('hName').value = name;
-  document.getElementById('hEmail').value = email;
+  const surveyError = errors.rol || errors.deporte_equipo || errors.frecuencia_meses || errors.presupuesto_ingresos || errors.zona_alicante || errors.freno_principal;
+  if (surveyError) {
+    status.textContent = surveyError;
+    status.focus();
+  }
+}
 
-  const form = document.getElementById('netlifyForm');
-  const formData = new FormData(form);
+function setSubmitting(isBusy) {
+  const button = document.getElementById('btnSubmit');
+  document.getElementById('registro').setAttribute('aria-busy', String(isBusy));
+  document.getElementById('btnText').textContent = isBusy ? 'Enviando...' : 'Apuntarme a la lista de espera';
+  document.getElementById('btnIcon').style.display = isBusy ? 'none' : '';
+  document.getElementById('btnSpinner').classList.toggle('hidden', !isBusy);
+  button.disabled = isBusy;
+  button.classList.toggle('opacity-70', isBusy);
+  button.classList.toggle('cursor-not-allowed', isBusy);
+}
+
+function fillHiddenForm(values) {
+  document.getElementById('hRol').value = values.rol;
+  document.getElementById('hSport').value = values.deporte_equipo;
+  document.getElementById('hFreq').value = values.frecuencia_meses;
+  document.getElementById('hBudget').value = values.presupuesto_ingresos;
+  document.getElementById('hZone').value = values.zona_alicante;
+  document.getElementById('hBlocker').value = values.freno_principal;
+  document.getElementById('hName').value = values.nombre;
+  document.getElementById('hEmail').value = values.email;
+}
+
+// ── FORM SUBMIT ──
+async function submitForm() {
+  if (isSubmitting) return;
+
+  const validation = LibrentaLeadForm.validateLeadData(getLeadValues());
+  if (!validation.isValid) {
+    showValidationErrors(validation.errors);
+    return;
+  }
+
+  clearErrors();
+  isSubmitting = true;
+  setSubmitting(true);
+  fillHiddenForm(validation.values);
 
   try {
-    await fetch('/', {
+    const response = await fetch('/', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: new URLSearchParams(formData).toString()
+      body: LibrentaLeadForm.buildNetlifyBody(validation.values).toString()
     });
-  } catch(e) { /* show success anyway */ }
 
-  showSuccess();
+    if (!response.ok) {
+      throw new Error('Netlify form submission failed with HTTP ' + response.status);
+    }
+
+    showSuccess();
+  } catch(error) {
+    console.error('Error enviando el formulario de LIBRENTA:', error);
+    const status = document.getElementById('formStatus');
+    status.textContent = 'No hemos podido registrar tus datos. Revisa tu conexion e intentalo de nuevo.';
+    status.focus();
+  } finally {
+    isSubmitting = false;
+    if (document.getElementById('successState').classList.contains('hidden')) {
+      setSubmitting(false);
+    }
+  }
 }
 
 function showSuccess() {
@@ -769,6 +892,8 @@ function showSuccess() {
   s.classList.remove('hidden');
   document.getElementById('progressFill').style.width = '100%';
   document.getElementById('progressFill').style.background = '#006e17';
+  document.getElementById('registro').setAttribute('aria-busy', 'false');
+  s.focus();
 }
 
 // ── SMOOTH SCROLL ──

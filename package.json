@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "test": "node tests/lead-form.test.js"
+  },
+  "devDependencies": {}
+}
