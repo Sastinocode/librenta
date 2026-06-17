@@ -1,22 +1,18 @@
 [build]
   publish = "."
 
-# Cabeceras de seguridad y rendimiento
+# Cabeceras de seguridad compatibles con Tailwind CDN y recursos actuales.
+# Deuda tecnica: Compilar Tailwind y aplicar CSP estricta en un sprint posterior.
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-
-# Cache largo para assets estáticos
-[[headers]]
-  for = "/*.css"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
 
 [[headers]]
-  for = "/*.js"
+  for = "/assets/*.js"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"

@@ -1,13 +1,9 @@
 {
   "name": "librenta",
   "version": "1.0.0",
-  "description": "LIBRENTA — P2P sports equipment rental marketplace",
-  "main": "serve.js",
+  "description": "LIBRENTA static lead capture landing",
   "scripts": {
-    "start": "node serve.js"
+    "test": "node tests/lead-form.test.js"
   },
-  "dependencies": {
-    "express": "^4.19.2",
-    "resend": "^4.0.0"
-  }
+  "devDependencies": {}
 }
