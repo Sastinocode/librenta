@@ -3,8 +3,8 @@ const path    = require('path');
 const { Resend } = require('resend');
 
 const app  = express();
-const PORT = 5000;
-const ROOT = path.join(__dirname, 'librenta-github-repo');
+const PORT = process.env.PORT || 3000;
+const ROOT = __dirname;
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -12,13 +12,14 @@ app.use(express.json());
 app.use(express.static(ROOT));
 
 app.post('/registro', async (req, res) => {
-  const { nombre, email, telefono, ciudad, rol } = req.body || {};
+  const { nombre, email, ciudad, rol, sport, freq, budget, zone, blocker } = req.body || {};
 
-  if (!nombre || !email || !ciudad || !rol) {
+  if (!nombre || !email || !rol) {
     return res.status(400).json({ ok: false, error: 'Campos obligatorios incompletos' });
   }
 
-  const esArrendatario = rol === 'Arrendatario';
+  const esArrendatario = rol.includes('Arrendatario') || rol === 'renter';
+  const rolLabel = esArrendatario ? 'Arrendatario (Deportista)' : 'Arrendador (Propietario)';
 
   const asuntoUsuario = esArrendatario
     ? '¡Gracias por unirte a LIBRENTA! 🏄'
@@ -48,8 +49,8 @@ app.post('/registro', async (req, res) => {
             </h1>
             <p style="margin:0 0 20px;font-size:16px;color:#444;line-height:1.6;">
               ${esArrendatario
-                ? 'Ya estás en nuestra lista de espera. Cuando lancemos en <strong>' + ciudad + '</strong> serás el primero en saberlo y en poder alquilar material deportivo de particulares a precios increíbles.'
-                : 'Ya estás en nuestra lista de prestadores. Cuando lancemos en <strong>' + ciudad + '</strong> te avisaremos para que puedas poner tu material a generar ingresos, sin complicaciones.'}
+                ? 'Ya estás en nuestra lista de espera. Cuando lancemos en <strong>' + (ciudad || 'tu ciudad') + '</strong> serás el primero en saberlo y en poder alquilar material deportivo de particulares a precios increíbles.'
+                : 'Ya estás en nuestra lista de prestadores. Cuando lancemos en <strong>' + (ciudad || 'tu ciudad') + '</strong> te avisaremos para que puedas poner tu material a generar ingresos, sin complicaciones.'}
             </p>
 
             <!-- Highlight box -->
@@ -91,7 +92,7 @@ app.post('/registro', async (req, res) => {
               <strong style="color:#006e17;">Guille, Feli y Sebas — Equipo LIBRENTA</strong>
             </p>
             <p style="margin:10px 0 0;font-size:11px;color:#bbb;">
-              Recibiste este email porque te apuntaste en librenta.com. Sin spam, lo prometemos.
+              Recibiste este email porque te apuntaste en librenta.es. Sin spam, lo prometemos.
             </p>
           </td>
         </tr>
@@ -110,19 +111,23 @@ app.post('/registro', async (req, res) => {
   <div style="background:#fff;border-radius:12px;padding:28px;max-width:520px;border:1px solid #e8e8e6;">
     <h2 style="margin:0 0 16px;color:#006e17;">🆕 Nuevo registro en LIBRENTA</h2>
     <table style="border-collapse:collapse;width:100%;">
-      <tr><td style="padding:8px 12px;background:#f4faf4;font-weight:700;border-radius:6px 0 0 6px;width:120px;">Nombre</td><td style="padding:8px 12px;">${nombre}</td></tr>
+      <tr><td style="padding:8px 12px;background:#f4faf4;font-weight:700;width:120px;">Nombre</td><td style="padding:8px 12px;">${nombre}</td></tr>
       <tr><td style="padding:8px 12px;font-weight:700;">Email</td><td style="padding:8px 12px;"><a href="mailto:${email}" style="color:#006e17;">${email}</a></td></tr>
-      <tr><td style="padding:8px 12px;background:#f4faf4;font-weight:700;">Teléfono</td><td style="padding:8px 12px;">${telefono ? '+34 ' + telefono : '—'}</td></tr>
-      <tr><td style="padding:8px 12px;font-weight:700;">Ciudad</td><td style="padding:8px 12px;">${ciudad}</td></tr>
-      <tr><td style="padding:8px 12px;background:#f4faf4;font-weight:700;">Rol</td><td style="padding:8px 12px;"><span style="background:${esArrendatario ? '#e6f3e6' : '#fff3e6'};color:${esArrendatario ? '#006e17' : '#E8732A'};padding:2px 10px;border-radius:20px;font-weight:700;">${rol}</span></td></tr>
+      <tr><td style="padding:8px 12px;background:#f4faf4;font-weight:700;">Ciudad</td><td style="padding:8px 12px;">${ciudad || '—'}</td></tr>
+      <tr><td style="padding:8px 12px;font-weight:700;">Rol</td><td style="padding:8px 12px;"><span style="background:${esArrendatario ? '#e6f3e6' : '#fff3e6'};color:${esArrendatario ? '#006e17' : '#E8732A'};padding:2px 10px;border-radius:20px;font-weight:700;">${rolLabel}</span></td></tr>
+      ${sport ? `<tr><td style="padding:8px 12px;background:#f4faf4;font-weight:700;">Deporte/Equipo</td><td style="padding:8px 12px;">${sport}</td></tr>` : ''}
+      ${freq ? `<tr><td style="padding:8px 12px;font-weight:700;">Frecuencia</td><td style="padding:8px 12px;">${freq}</td></tr>` : ''}
+      ${budget ? `<tr><td style="padding:8px 12px;background:#f4faf4;font-weight:700;">Presupuesto/Ingreso</td><td style="padding:8px 12px;">${budget}</td></tr>` : ''}
+      ${zone ? `<tr><td style="padding:8px 12px;font-weight:700;">Zona</td><td style="padding:8px 12px;">${zone}</td></tr>` : ''}
+      ${blocker ? `<tr><td style="padding:8px 12px;background:#f4faf4;font-weight:700;">Freno principal</td><td style="padding:8px 12px;">${blocker}</td></tr>` : ''}
     </table>
   </div>
 </body>
 </html>`;
 
-  const senderFrom    = process.env.RESEND_FROM || 'onboarding@resend.dev';
-  const fromUsuario   = `LIBRENTA <${senderFrom}>`;
-  const fromEquipo    = `LIBRENTA Registros <${senderFrom}>`;
+  const senderFrom  = process.env.RESEND_FROM || 'onboarding@resend.dev';
+  const fromUsuario = `LIBRENTA <${senderFrom}>`;
+  const fromEquipo  = `LIBRENTA Registros <${senderFrom}>`;
 
   const results = await Promise.allSettled([
     resend.emails.send({
@@ -133,18 +138,18 @@ app.post('/registro', async (req, res) => {
     }),
     resend.emails.send({
       from:    fromEquipo,
-      to:      [process.env.EMAIL_EQUIPO],
-      subject: `[LIBRENTA] Nuevo ${rol}: ${nombre} (${ciudad})`,
+      to:      [process.env.EMAIL_EQUIPO || 'sebasnocode@gmail.com'],
+      subject: `[LIBRENTA] Nuevo ${rolLabel}: ${nombre} (${ciudad || '—'})`,
       html:    htmlEquipo,
     }),
   ]);
 
   results.forEach((r, i) => {
-    const label = i === 0 ? `bienvenida→${email}` : `notif→${process.env.EMAIL_EQUIPO}`;
+    const label = i === 0 ? `bienvenida→${email}` : `notif→equipo`;
     if (r.status === 'rejected') {
       console.error(`[Resend] ERROR ${label}:`, r.reason?.message || r.reason);
     } else if (r.value?.error) {
-      console.error(`[Resend] ERROR ${label}:`, r.value.error.message);
+      console.error(`[Resend] API ERROR ${label}:`, r.value.error.message);
     } else {
       console.log(`[Resend] OK ${label} id=${r.value?.data?.id}`);
     }
@@ -158,5 +163,5 @@ app.get('*', (_req, res) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Librenta server running at http://0.0.0.0:${PORT}`);
+  console.log(`✅ LIBRENTA server corriendo en http://0.0.0.0:${PORT}`);
 });

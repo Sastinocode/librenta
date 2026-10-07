@@ -749,16 +749,28 @@ async function submitForm() {
   document.getElementById('hName').value = name;
   document.getElementById('hEmail').value = email;
 
-  const form = document.getElementById('netlifyForm');
-  const formData = new FormData(form);
-
   try {
-    await fetch('/', {
+    const res = await fetch('/registro', {
       method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      body: new URLSearchParams(formData).toString()
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre:  name,
+        email:   email,
+        ciudad:  data['zone'] || '',
+        rol:     data['rol'] || (currentRole === 'renter' ? 'Arrendatario (Deportista)' : 'Arrendador (Propietario)'),
+        sport:   data['sport'] || data['equipment'] || '',
+        freq:    data['freq'] || data['idle'] || '',
+        budget:  data['budget'] || data['income'] || '',
+        zone:    data['zone'] || '',
+        blocker: data['blocker'] || '',
+      })
     });
-  } catch(e) { /* show success anyway */ }
+    const result = await res.json();
+    if (!result.ok) throw new Error('Server error');
+  } catch(e) {
+    console.error('Registration error:', e);
+    // Mostrar éxito igualmente para no bloquear al usuario
+  }
 
   showSuccess();
 }

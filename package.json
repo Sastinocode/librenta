@@ -4,10 +4,14 @@
   "description": "LIBRENTA — P2P sports equipment rental marketplace",
   "main": "serve.js",
   "scripts": {
-    "start": "node serve.js"
+    "start": "node serve.js",
+    "dev": "node serve.js"
   },
   "dependencies": {
     "express": "^4.19.2",
     "resend": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
